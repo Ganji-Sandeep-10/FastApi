@@ -34,8 +34,7 @@ def update_task(task_id:int,update:schemas.TaskUpdate,db:Session=Depends(get_db)
         raise HTTPException(status_code=404,detail=f"Task with {task_id} not found")
 
     for field,value in update.model_dump(exclude_unset=True).items():
-        if value is not None:
-            setattr(task,field,value)
+        setattr(task,field,value)
 
     db.commit()
     db.refresh(task)

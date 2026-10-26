@@ -24,4 +24,7 @@ class TaskUpdate(BaseModel):
     def check_not_empty(self):
         if not self.model_fields_set:
             raise ValueError("Send at least one field to update")
+        for name in self.model_fields_set:
+            if getattr(self,name) is None:
+                raise ValueError(f"{name} cannot be null; omit it to leave it unchanged")
         return self
